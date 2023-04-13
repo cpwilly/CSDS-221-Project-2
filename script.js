@@ -15,11 +15,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const descriptionCell = document.createElement('td');
     descriptionCell.textContent = description;
 
-    
     const deadlineCell = document.createElement('td');
     const deadlineDate = new Date(deadline);
-    deadlineCell.textContent = deadlineDate.toLocaleDateString('en-US', {month: '2-digit', day: '2-digit', year: '2-digit'});
-
+    deadlineCell.textContent = deadlineDate.toLocaleDateString('en-US', {
+      month: '2-digit',
+      day: '2-digit',
+      year: '2-digit',
+    });
 
     const priorityCell = document.createElement('td');
     priorityCell.textContent = priority;
@@ -86,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
     deleteButton.addEventListener('click', () => {
       // Code to delete the task goes here
       row.remove();
-      toastr.success("The Task was Deleted Successfully");
+      toastr.success('The Task was Deleted Successfully');
     });
     updateCell.appendChild(deleteButton);
 
@@ -102,18 +104,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add the row to the table body
     //tableBody.appendChild(row);
 
-    
-    if (globalRowIndex !== undefined && globalRowIndex >= 0 && globalRowIndex <= tableBody.rows.length) {
+    if (
+      globalRowIndex !== undefined &&
+      globalRowIndex >= 0 &&
+      globalRowIndex <= tableBody.rows.length
+    ) {
       tableBody.appendChild(row);
       tableBody.insertBefore(row, globalRow);
       const nextRow = row.nextSibling;
       nextRow.remove();
-      toastr.success("The Task was Updated Successfully");
+      toastr.success('The Task was Updated Successfully');
     } else {
       tableBody.appendChild(row);
-      toastr.success("The Task was Added Successfully");
+      toastr.success('The Task was Added Successfully');
     }
-    
   };
 
   // Get the add task button element
@@ -137,8 +141,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Add event listener to the add task button to show the add task modal
   addTaskButton.addEventListener('click', () => {
-    globalRowIndex=-1;
-    globalRow=null;
+    globalRowIndex = -1;
+    globalRow = null;
     makeAdd();
     const form = addTaskModal.querySelector('form');
     form.reset();
@@ -166,21 +170,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     //verify
     // Check if the title is empty
-  if (task.trim() === '') {
-    // Show an error message and add the error class to the input
-    titleError.textContent = 'Title cannot be empty';
-    taskInput.classList.add('error');
-    allClear = false;
-  } else {
-    // Remove the error message and class
-    titleError.textContent = '';
-    taskInput.classList.remove('error');
-  }
-  
+    if (task.trim() === '') {
+      // Show an error message and add the error class to the input
+      titleError.textContent = 'Title cannot be empty';
+      taskInput.classList.add('error');
+      allClear = false;
+    } else {
+      // Remove the error message and class
+      titleError.textContent = '';
+      taskInput.classList.remove('error');
+    }
+
     const rows = tableBody.querySelectorAll('tr');
     for (const row of rows) {
       const taskCell = row.querySelector('td:first-child');
-      if ((taskCell.textContent === task) && (!editMode)) {
+      if (taskCell.textContent === task && !editMode) {
         titleError.textContent = 'Title must be unique';
         taskInput.classList.add('error');
         allClear = false;
@@ -188,45 +192,43 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    if (deadline.trim() === '') {
+      // Show an error message and add the error class to the input
+      deadlineError.textContent = 'Deadline must be set';
+      deadlineInput.classList.add('error');
+      allClear = false;
+    } else {
+      // Remove the error message and class
+      deadlineError.textContent = '';
+      deadlineInput.classList.remove('error');
+    }
+    if (priority.trim() === '') {
+      // Show an error message and add the error class to the input
+      priorityError.textContent = 'Priority must be set';
+      allClear = false;
+    } else {
+      // Remove the error message and class
+      priorityError.textContent = '';
+    }
 
+    // Check if the description is empty
+    if (description.trim() === '') {
+      // Show an error message and add the error class to the input
+      descriptionError.textContent = 'Description cannot be empty';
+      descriptionInput.classList.add('error');
+      allClear = false;
+    } else {
+      // Remove the error message and class
+      descriptionError.textContent = '';
+      descriptionInput.classList.remove('error');
+    }
 
-  if (deadline.trim() === '') {
-    // Show an error message and add the error class to the input
-    deadlineError.textContent = 'Deadline must be set';
-    deadlineInput.classList.add('error');
-    allClear = false;
-  } else {
-    // Remove the error message and class
-    deadlineError.textContent = '';
-    deadlineInput.classList.remove('error');
-  }
-  if (priority.trim() === '') {
-    // Show an error message and add the error class to the input
-    priorityError.textContent = 'Priority must be set';
-    allClear = false;
-  } else {
-    // Remove the error message and class
-    priorityError.textContent = '';
-  }
-
-  // Check if the description is empty
-  if (description.trim() === '') {
-    // Show an error message and add the error class to the input
-    descriptionError.textContent = 'Description cannot be empty';
-    descriptionInput.classList.add('error');
-    allClear = false;
-  } else {
-    // Remove the error message and class
-    descriptionError.textContent = '';
-    descriptionInput.classList.remove('error');
-  }
-
-  if (allClear){
-    const isComplete = false;
-    addRowToTable(task, description, deadline, priority, isComplete);
-    addTaskModal.classList.remove('show');
-    addTaskModal.style.display = 'none';
-  }
+    if (allClear) {
+      const isComplete = false;
+      addRowToTable(task, description, deadline, priority, isComplete);
+      addTaskModal.classList.remove('show');
+      addTaskModal.style.display = 'none';
+    }
   });
 
   cancelButton.addEventListener('click', () => {
@@ -250,19 +252,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalTitle = document.querySelector('.modal-title');
     modalTitle.innerHTML = '<i class="fas fa-plus-circle"></i> Add Task';
     const taskInput = document.querySelector('#task-input');
-    taskInput.style.display = 'block'
+    taskInput.style.display = 'block';
     const addButton = document.querySelector('#add-button');
     addButton.innerHTML = '<i class="fa fa-plus-circle"></i> Add';
   }
-  
-
-  // Example usage: add a row to the table
-  addRowToTable('Task 1', 'Description 1', '2023-04-10', 'High', false);
 });
 
 // Create a new column for the buttons in the row
 const buttonCell = document.createElement('td');
-
 
 var editMode = false;
 var globalRow;
