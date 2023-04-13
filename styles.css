@@ -1,0 +1,50 @@
+.modal-header-custom {
+  background-color: #007bff;
+  color: white;
+}
+
+.button-column {
+  width: 150px;
+}
+
+.form-group{
+  display: flex;
+  flex-direction: column;
+}
+
+#toast-container > .toast-success {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.error{
+  border: 2px solid red !important;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.add-task-button {
+  font-size: 1.2rem;
+  color: #fff !important;
+  //border-color: #fff !important;
+  box-shadow: .5px 3px 3px rgba(0, 0, 0, 0.25);
+}
+
+
+.btnUpdate{
+  width: 3cm;
+}
+
+
+
+
+
+
